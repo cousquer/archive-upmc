@@ -1,0 +1,811 @@
+/**
+ * Licensed to Apereo under one or more contributor license
+ * agreements. See the NOTICE file distributed with this work
+ * for additional information regarding copyright ownership.
+ * Apereo licenses this file to you under the Apache License,
+ * Version 2.0 (the "License"); you may not use this file
+ * except in compliance with the License.  You may obtain a
+ * copy of the License at the following location:
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+
+
+*, *:before, *:after {
+   box-sizing: border-box;
+   margin: 0;
+   padding: 0;
+}
+
+html,body{
+   width: 100%;
+   min-height: 100%;
+}
+
+body {
+   background-color: #222;
+   font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+   font-size: 12px;
+   letter-spacing: 0.5px;
+   overflow-x: hidden;
+}
+
+input[type="radio"] {
+   position: fixed;
+   top: -1.5em;
+   left: -1.5em;
+}
+
+.pagination label .text-label {
+   display: inline-block;
+   line-height: 15px;
+   vertical-align: middle;
+   margin: 0;
+   padding: 0;
+   position: relative;
+   top: -8px;
+   color: #fff;
+}
+
+.pagination label span {
+   background-color: #fff;
+   border-radius: 50%;
+   display: inline-block;
+   margin: 8px 4px;
+   opacity: 1;
+   height: 8px;
+   width: 8px;
+}
+
+input[type="radio"]:nth-of-type(1):checked ~ .pagination label:nth-child(1) span {
+   opacity: 1;
+}
+
+input[type="radio"]:nth-of-type(1):checked ~ .pages {
+   transform: translateX(0%);
+}
+
+input[type="radio"]:nth-of-type(1):checked ~ .pages .page .bg-blur, input[type="radio"]:nth-of-type(1):checked ~ .pages .bottom-bar {
+   transform: translateX(0%);
+}
+
+input[type="radio"]:nth-of-type(2):checked ~ .pagination label:nth-child(2) span {
+   opacity: 1;
+}
+
+input[type="radio"]:nth-of-type(2):checked ~ .pages {
+   transform: translateX(-320px);
+}
+
+input[type="radio"]:nth-of-type(2):checked ~ .pages .page .bg-blur, input[type="radio"]:nth-of-type(2):checked ~ .pages .bottom-bar {
+   transform: translateX(100%);
+}
+
+.screen {
+   background-color: #000;
+   background-image: url(PIA21971_web.jpg);
+   background-position: center;
+   background-size: cover;
+   color: #fff;
+   font-size: 12px;
+   font-weight: 300;
+   line-height: 20px;
+   margin: .5em auto 0 auto;
+   padding-bottom: 116px;
+   position: relative;
+   transform-style: preserve-3d;
+   width: 100vw;
+   height: 97vh;
+}
+
+.status, .pages, .pagination, .bg-blur, .bottom-bar {
+   position: absolute;
+}
+
+/** Top Bar **/
+.status {
+   display: flex;
+   align-items: center;
+   padding: 0 4px;
+   width: 100%;
+   height: 20px;
+   background-color: rgba(0, 0, 0, 0.3);
+}
+.status > div {
+   width: 33.33%;
+}
+
+/* User Name */
+.user-name {
+   text-align: center;
+}
+
+/** Pages **/
+.pages, .bottom-bar {
+   transition: transform 0.25s ease-in-out;
+}
+
+.pages {
+   white-space: nowrap;
+   width: 100%;
+   /*height: calc(100% - 116px);*/
+   transform-style: preserve-3d;
+   z-index: 2;
+}
+
+.page {
+   display: inline-flex;
+   align-content: flex-start;
+   flex-wrap: wrap;
+   padding: 27px 8px 92px 8px; /* Many Thanks Christian M. ;-) */
+   /*width: 320px;
+   height: 100%;*/
+   width: 100vw;
+   height: 0%;
+}
+
+.page .folder:nth-child(1) .folder-apps:focus {
+   transform: scale(1, 1) translate3d(0, 50%, 1px);
+   position: absolute;
+   left: 0;
+   top: 0%;
+   width: 100%;
+   background-color: #fff;
+   z-index: auto;
+}
+
+.page .folder:nth-child(1) .folder-apps:focus ~ .folder-name {
+   transform: translate3d(50%, 50%, 1px);
+}
+
+.page .folder:nth-child(2) .folder-apps:focus {
+   transform: scale(1, 1) translate3d(0, 50%, 1px);
+   position: absolute;
+   left: 0;
+   top: 0%;
+   width: 100%;
+   background-color: #fff;
+   z-index: auto;
+}
+
+.page .folder:nth-child(2) .folder-apps:focus ~ .folder-name {
+   transform: translate3d(50%, 50%, 1px);
+}
+
+.page .folder:nth-child(3) .folder-apps:focus {
+   transform: scale(1, 1) translate3d(0, 50%, 1px);
+   position: absolute;
+   left: 0;
+   top: 0%;
+   width: 100%;
+   background-color: #fff;
+   z-index: 100000;
+}
+
+.page .folder:nth-child(3) .folder-apps:focus ~ .folder-name {
+   transform: translate3d(-160px, -270px, 1px);
+}
+
+.page .folder:nth-child(4) .folder-apps:focus {
+   transform: scale(1, 1) translate3d(0, 50%, 1px);
+   position: absolute;
+   left: 0;
+   top: 0%;
+   width: 100%;
+   background-color: #fff;
+}
+
+.page .folder:nth-child(4) .folder-apps:focus ~ .folder-name {
+   transform: translate3d(-236px, -270px, 1px);
+}
+
+.page .folder:nth-child(5) .folder-apps:focus {
+   transform: scale(1, 1) translate3d(0, 50%, 1px);
+   position: absolute;
+   left: 0;
+   top: 0%;
+   width: 100%;
+   background-color: #fff;
+}
+
+.page .folder:nth-child(5) .folder-apps:focus ~ .folder-name {
+   transform: translate3d(-8px, -357px, 1px);
+}
+
+.page .folder:nth-child(6) .folder-apps:focus {
+   transform: scale(1, 1) translate3d(0, 50%, 1px);
+   position: absolute;
+   left: 0;
+   top: 0%;
+   width: 100%;
+   background-color: #fff;
+}
+
+.page .folder:nth-child(6) .folder-apps:focus ~ .folder-name {
+   transform: translate3d(-84px, -357px, 1px);
+}
+
+.page .folder:nth-child(7) .folder-apps:focus {
+   transform: scale(1, 1) translate3d(0, 50%, 1px);
+   position: absolute;
+   left: 0;
+   top: 0%;
+   width: 100%;
+   background-color: #fff;
+}
+
+.page .folder:nth-child(7) .folder-apps:focus ~ .folder-name {
+   transform: translate3d(-160px, -357px, 1px);
+}
+
+.page .folder:nth-child(8) .folder-apps:focus {
+   transform: scale(1, 1) translate3d(0, 50%, 1px);
+   position: absolute;
+   left: 0;
+   top: 0%;
+   width: 100%;
+   background-color: #fff;
+}
+
+.page .folder:nth-child(8) .folder-apps:focus ~ .folder-name {
+   transform: translate3d(-236px, -357px, 1px);
+}
+
+.page .folder:nth-child(9) .folder-apps:focus {
+   transform: scale(1, 1) translate3d(0, 50%, 1px);
+   position: absolute;
+   left: 0;
+   top: 0%;
+   width: 100%;
+   background-color: #fff;
+}
+
+.page .folder:nth-child(9) .folder-apps:focus ~ .folder-name {
+   transform: translate3d(-8px, -444px, 1px);
+}
+
+.page .folder:nth-child(10) .folder-apps:focus {
+   transform: scale(1, 1) translate3d(0, 50%, 1px);
+   position: absolute;
+   left: 0;
+   top: 0%;
+   width: 100%;
+   background-color: #fff;
+}
+
+.page .folder:nth-child(10) .folder-apps:focus ~ .folder-name {
+   transform: translate3d(-84px, -444px, 1px);
+}
+
+.page .folder:nth-child(11) .folder-apps:focus {
+   transform: scale(1, 1) translate3d(0, 50%, 1px);
+   position: absolute;
+   left: 0;
+   top: 0%;
+   width: 100%;
+   background-color: #fff;
+}
+
+.page .folder:nth-child(11) .folder-apps:focus ~ .folder-name {
+   transform: translate3d(-160px, -444px, 1px);
+}
+
+.page .folder:nth-child(12) .folder-apps:focus {
+   transform: scale(1, 1) translate3d(0, 50%, 1px);
+   position: absolute;
+   left: 0;
+   top: 0%;
+   width: 100%;
+   background-color: #fff;
+}
+
+.page .folder:nth-child(12) .folder-apps:focus ~ .folder-name {
+   transform: translate3d(-236px, -444px, 1px);
+}
+
+.page .folder:nth-child(13) .folder-apps:focus {
+   transform: scale(1, 1) translate3d(0, 50%, 1px);
+   position: absolute;
+   left: 0;
+   top: 0%;
+   width: 100%;
+   background-color: #fff;
+}
+
+.page .folder:nth-child(13) .folder-apps:focus ~ .folder-name {
+   transform: translate3d(-8px, -531px, 1px);
+}
+
+.page .folder:nth-child(14) .folder-apps:focus {
+   transform: scale(1, 1) translate3d(0, 50%, 1px);
+   position: absolute;
+   left: 0;
+   top: 0%;
+   width: 100%;
+   background-color: #fff;
+}
+
+.page .folder:nth-child(14) .folder-apps:focus ~ .folder-name {
+   transform: translate3d(-84px, -531px, 1px);
+}
+
+.page .folder:nth-child(15) .folder-apps:focus {
+   transform: scale(1, 1) translate3d(0, 50%, 1px);
+   position: absolute;
+   left: 0;
+   top: 0%;
+   width: 100%;
+   background-color: #fff;
+}
+
+.page .folder:nth-child(15) .folder-apps:focus ~ .folder-name {
+   transform: translate3d(-160px, -531px, 1px);
+}
+
+.page .folder:nth-child(16) .folder-apps:focus {
+   transform: scale(1, 1) translate3d(0, 50%, 1px);
+   position: absolute;
+   left: 0;
+   top: 0%;
+   width: 100%;
+   background-color: #fff;
+}
+
+.page .folder:nth-child(16) .folder-apps:focus ~ .folder-name {
+   transform: translate3d(-236px, -531px, 1px);
+}
+
+.page .folder:nth-child(17) .folder-apps:focus {
+   transform: scale(1, 1) translate3d(0, 50%, 1px);
+   position: absolute;
+   left: 0;
+   top: 0%;
+   width: 100%;
+   background-color: #fff;
+}
+
+.page .folder:nth-child(17) .folder-apps:focus ~ .folder-name {
+   transform: translate3d(-8px, -618px, 1px);
+}
+
+.page .folder:nth-child(18) .folder-apps:focus {
+   transform: scale(1, 1) translate3d(0, 50%, 1px);
+   position: absolute;
+   left: 0;
+   top: 0%;
+   width: 100%;
+   background-color: #fff;
+}
+
+.page .folder:nth-child(18) .folder-apps:focus ~ .folder-name {
+   transform: translate3d(-84px, -618px, 1px);
+}
+
+.page .folder:nth-child(19) .folder-apps:focus {
+   transform: scale(1, 1) translate3d(0, 50%, 1px);
+   position: absolute;
+   left: 0;
+   top: 0%;
+   width: 100%;
+   background-color: #fff;
+}
+
+.page .folder:nth-child(19) .folder-apps:focus ~ .folder-name {
+   transform: translate3d(-160px, -618px, 1px);
+}
+
+.page .folder:nth-child(20) .folder-apps:focus {
+   transform: scale(1, 1) translate3d(0, 50%, 1px);
+   position: absolute;
+   left: 0;
+   top: 0%;
+   width: 100%;
+   background-color: #fff;
+}
+
+.page .folder:nth-child(20) .folder-apps:focus ~ .folder-name {
+   transform: translate3d(-236px, -618px, 1px);
+}
+
+/** Apps **/
+.app, .folder {
+   margin: 0 8px 7px 8px;
+   max-width: 60px;
+   max-height: 80px;
+}
+
+.app-icon, .folder-apps {
+   margin: auto;
+}
+
+.folder-apps {
+   position: relative;
+   /*z-index: 1000;*/
+}
+
+.app-icon {
+   background-image: linear-gradient(#dde, #aab);
+   /*border-radius: 9px;*/
+   width: 60px;
+   height: 60px;
+   z-index: -1;
+}
+.folder-apps .app-icon {
+   width: 40px;
+   height: 40px;
+}
+.folder-apps .app-icon {
+   width: 40px;
+   height: 40px;
+}
+.folder-apps:focus .app-icon {
+   width: 60px;
+   height: 60px;
+}
+
+.app:nth-child(6n + 2) .app-icon {
+   background-image: linear-gradient(#eddf44, #ecba45);
+}
+
+.app:nth-child(6n + 3) .app-icon {
+   background-image: linear-gradient(#82e8d1, #25ce93);
+}
+
+.app:nth-child(6n + 4) .app-icon {
+   background-image: linear-gradient(#ff9eed, #e06bfe);
+}
+
+.app:nth-child(6n + 5) .app-icon {
+   background-image: linear-gradient(#c5ca6c, #4ebf63);
+}
+
+.app:nth-child(6n + 6) .app-icon {
+   background-image: linear-gradient(#be75ff, #a43ffd);
+}
+
+.app:nth-child(6n + 7) .app-icon {
+   background-image: linear-gradient(#fa4, #ff8f44);
+}
+
+.app:nth-child(6n + 8) .app-icon {
+   background-image: linear-gradient(#ff7074, #fe5242);
+}
+
+.app:nth-child(6n + 9) .app-icon {
+   background-image: linear-gradient(#70e4ff, #0aa5ff);
+}
+
+.bg-blur {
+   top: 0;
+   left: 0;
+   width: 100%;
+   height: 100%;
+   visibility: hidden;
+   transition: backdrop-filter 0.25s cubic-bezier(0.2, 0.7, 0.3, 0.8), visibility 0.25s cubic-bezier(0.2, 0.7, 0.3, 0.8);
+   z-index: 1;
+}
+
+.folder-apps {
+   background-color: rgba(255, 255, 255, 0.6);
+   display: flex;
+   align-content: flex-start;
+   flex-wrap: wrap;
+   transition: transform 0.25s cubic-bezier(0.2, 0.7, 0.3, 0.8);
+   padding: 44px 36px;
+   width: 304px;
+   max-height: 304px;
+   min-height: 304px;
+   transform: scale(0.19737, 0.19737);
+   transform-origin: 0 0;
+}
+.folder-apps:focus {
+   outline: 0;
+   padding: 26px 8px 26px 8px;
+   height:auto;
+   min-height: auto;
+   max-height: auto;
+   background-color: rgba(0, 0, 0, 0.7) !important;
+   border-top: .05rem solid #F5F5F5;
+   border-bottom: .05rem solid #F5F5F5;
+   box-shadow: 0px 7px 15px 1px rgba(0, 0, 0, 0.19);
+   z-index: 100;
+}
+.folder-apps:focus ~ .folder-name {
+   animation: folderNameFadeIn 0.2s 0.2s forwards;
+   font-size: 3em;
+   opacity: 0;
+   width: 300px;
+
+}
+/* WIP */
+.folder-apps:focus ~ .bg-blur {
+   visibility: visible;
+}
+
+.folder-apps:focus .app {
+   margin: 0 18px 7px 18px;
+   color: #000;
+}
+
+.folder-apps:focus .app-icon {
+   /*border-radius: 9px;*/
+}
+
+.folder-apps:focus .app-name {
+   display: inherit;
+}
+
+.folder-apps .app {
+   margin: 0 8px 16px 8px;
+}
+.folder-apps .app-icon {
+   /*border-radius: 18px;*/
+}
+.folder-apps .app-name {
+   display: none;
+}
+
+.app-icon:active, .folder-apps:not(:focus):active {
+   filter: brightness(0.7);
+}
+
+.app-name, .folder-name {
+   text-align: center;
+   background-color: rgba(0, 0, 0, 0.4);
+   color: white !important;
+}
+
+.folder-name {
+   transform: translateY(-244px);
+}
+.app-icon .material-icons {
+   font-size: 3rem;
+   padding: .12em
+}
+.folder-apps .app-icon .material-icons {
+   font-size: 2rem;
+}
+.folder-apps:focus .app-icon .material-icons {
+   font-size: 3rem;
+}
+
+/** LIVE tiles : "social" **/
+
+.social {
+   position: absolute;
+   min-width: 320px;
+   height: 100%;
+   top: 25px;
+   ;
+}
+.social .social-card {
+   position: relative;
+   width: 90%;
+   height: 65px;
+   padding: 10px 0;
+   background: white;
+   border-radius: 5px;
+   margin: auto;
+   box-shadow: 0px 6px 8px 2px rgba(0, 0, 0, 0.03);
+   margin-bottom: 15px;
+   overflow: hidden;
+}
+.social .social-card .material-icons {
+   position: absolute;
+   padding: 5px;
+   top: 0;
+   right: 0;
+   color: rgba(0, 0, 0, 0.3);
+   font-size: 15px;
+   cursor: pointer;
+}
+.social .social-card .profimg {
+   position: relative;
+   width: 15px;
+   height: 100%;
+   float: left;
+}
+.social .social-card .profimg img {
+   position: absolute;
+   width: 40px;
+   border-radius: 50%;
+   margin: auto;
+   top: 0;
+   bottom: 0;
+   left: 0;
+   right: 0;
+   /* Wip 
+   -webkit-filter: grayscale(30%) hue-rotate(10deg) brightness(115%) contrast(60%);
+   filter: grayscale(30%) hue-rotate(20deg) brightness(115%) contrast(60%);
+   */
+}
+.social .social-card .social-cont {
+   position: relative;
+   width: 60%;
+   height: 100%;
+   float: left;
+}
+.social .social-card .social-cont p {
+   font-size: 9px;
+   color: rgba(0, 0, 0, 0.6);
+   margin: 0;
+   padding: 4px 0px;
+}
+.social .social-card .social-cont p .social-title {
+   font-size: 10px;
+   color: rgba(0, 0, 0, 0.5);
+   font-weight: 600;
+   display: block;
+}
+.social .bottommenu {
+   width: 100%;
+   height: 50px;
+   background: white;
+   box-shadow: 0px -3px 7px rgba(0, 0, 0, 0.06);
+   position: absolute;
+   bottom: 0;
+}
+.social .bottommenu ul {
+   list-style: none;
+   padding: 0;
+   margin: 0;
+   width: 100%;
+   font-size: 0;
+   height: 50px;
+}
+.social .bottommenu ul li {
+   display: inline-block;
+   padding: 0;
+   margin: 0;
+   text-align: center;
+   width: 25%;
+   cursor: pointer;
+}
+.social .bottommenu ul li:hover {
+   background: rgba(0, 0, 0, 0.02);
+}
+.social .bottommenu ul li:active {
+   background: rgba(0, 0, 0, 0.1);
+}
+.social .bottommenu ul li .material-icons {
+   line-height: 50px;
+   color: rgba(0, 0, 0, 0.35);
+   font-size: 20px;
+}
+
+
+/** Pagination **/
+.pagination {
+   display: flex;
+   justify-content: center;
+   top: calc(100% - 116px);
+   width: 100%;
+   height: 24px;
+   background-color: black;
+    opacity: .7;
+   left: 0;
+}
+
+/** Bottom Bar **/
+.bottom-bar div >.app-name {
+   color:#000 !important;
+   background-color: rgba(255, 255, 255, 0.2);
+   font-size: 10px;
+}
+.bottom-bar .folder-apps {
+   background-color: rgba(0, 0, 0, 0.6);
+}
+.bottom-bar .app, .bottom-bar .folder {
+   margin: -2px 8px 18px;
+   max-height: 60px;
+}
+.bottom-bar .folder .app {
+   margin: 0 8px 16px 8px;
+   z-index: 10;
+}
+.bottom-bar .bg-blur {
+   top: -476px;
+}
+.bottom-bar .folder-name {
+   display: block;
+   font-size: 10px;
+}
+
+.bottom-bar .folder-apps  .app-name {
+    color:#fff !important;
+   font-size: 12px;
+}
+.bottom-bar {
+   background-color: rgba(255, 255, 255, 0.8);
+   top: calc(100vh - 92px);
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   padding: 0 6px;
+   width: 100%;
+   height: 92px;
+   transform-style: preserve-3d;
+   position: fixed;
+   z-index: 10;
+
+}
+
+@media screen and (min-width: 399px){
+   .bottom-bar {
+      background-color: rgba(255, 255, 255, 0.8);
+      top: calc(100vh - 92px);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 0 6px;
+      width: 100%;
+      height: 92px;
+      transform-style: preserve-3d;
+      position: fixed;
+      z-index: 10;
+
+   }
+}
+
+.bottom-bar .app, .bottom-bar .folder {
+  margin: -2px 8px 18px;
+  max-height: 60px;
+}
+.bottom-bar .folder .app {
+  margin: 0 8px 16px 8px;
+}
+.bottom-bar .bg-blur {
+  top: -476px;
+}
+.bottom-bar .folder-name {
+  display: block;
+}
+.bottom-bar .folder-apps:focus .app {
+  margin: 0 18px 27px 18px;
+}/*
+.bottom-bar .folder:nth-child(1) .folder-apps:focus {
+  transform: scale(1, 1) translate3d(-8px, -359px, 1px);
+}
+.bottom-bar .folder:nth-child(1) .folder-apps:focus ~ .folder-name {
+  display: inherit;
+  transform: translate3d(-8px, -735px, 1px);
+}*/
+.bottom-bar .folder:nth-child(2) .folder-apps:focus {
+  transform: scale(1, 1) translate3d(0px, -270px, 1px);
+}
+.bottom-bar .folder:nth-child(2) .folder-apps:focus ~ .folder-name {
+   display: none ;
+   display: inherit;
+   line-height: 50px;
+   transform: translate3d(0px, -545px, 1px);
+}
+.bottom-bar .folder:nth-child(3) .folder-apps:focus {
+  transform: scale(1, 1) translate3d(-160px, -359px, 1px);
+}
+.bottom-bar .folder:nth-child(3) .folder-apps:focus ~ .folder-name {
+  display: inherit;
+  transform: translate3d(-160px, -735px, 1px);
+}
+.bottom-bar .folder:nth-child(4) .folder-apps:focus {
+  transform: scale(1, 1) translate3d(-236px, -359px, 1px);
+}
+.bottom-bar .folder:nth-child(4) .folder-apps:focus ~ .folder-name {
+  display: inherit;
+  transform: translate3d(-236px, -735px, 1px);
+}
+
+@keyframes folderNameFadeIn {
+   from {
+      opacity: 0;
+   }
+   to {
+      opacity: 1;
+   }
+}

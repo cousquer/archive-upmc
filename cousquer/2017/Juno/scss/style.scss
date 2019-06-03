@@ -1,0 +1,310 @@
+$screenW: 320px;
+$screenH: 568px;
+$statusBarH: 20px;
+$paginationH: 24px;
+$bottomBarH: 92px;
+$pageH: $screenH - $statusBarH - $bottomBarH;
+$iconColors:
+	(#eddf44 #ecba45)
+	(#82e8d1 #25ce93)
+	(#ff9eed #e06bfe)
+	(#c5ca6c #4ebf63)
+	(#be75ff #a43ffd)
+	(#fa4 #ff8f44)
+	(#ff7074 #fe5242)
+	(#70e4ff #0aa5ff);
+$folderTiming: cubic-bezier(0.2,0.7,0.3,0.8);
+$blur: blur(15px);
+
+*, *:before, *:after {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+body {
+	background-color: #222;
+	letter-spacing: 0.5px;
+}
+input[type="radio"] {
+	position: fixed;
+	top: -1.5em;
+	left: -1.5em;
+	~ .pagination label span {
+		background-color: #fff;
+		border-radius: 50%;
+		display: inline-block;
+		margin: 8px 4px;
+		opacity: 0.3;
+		height: $paginationH/3;
+		width: $paginationH/3;
+	}
+	@for $p from 1 through 2 {
+		&:nth-of-type(#{$p}):checked {
+			~ .pagination label:nth-child(#{$p}) span {
+				opacity: 1;
+			}
+			~ .pages {
+				transform: translateX(-100% * ($p - 1));
+				.page .bg-blur, .bottom-bar {
+					transform: translateX(100% * ($p - 1));
+				}
+			}
+		}
+	}
+}
+.screen {
+	background: {
+		color: #000;
+		image: url(http://mw2.google.com/mw-panoramio/photos/medium/23268043.jpg);
+		position: center;
+		size: auto 100%;
+	};
+	color: #fff;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+	font-size: 12px;
+	font-weight: 300;
+	line-height: 20px;
+	margin: 1.5em auto 0 auto;
+	overflow: hidden;
+	position: relative;
+	transform-style: preserve-3d;
+	width: $screenW;
+	height: $screenH;
+}
+.status, .pages, .pagination, .bg-blur, .bottom-bar {
+	position: absolute;
+}
+/** Status Bar **/
+.status {
+	display: flex;
+	align-items: center;
+	padding: 0 4px;
+	width: 100%;
+	height: $statusBarH;
+	> div {
+		width: 33.33%;
+	}
+}
+/* Clock */
+.clock {
+	text-align: center;
+}
+/* Battery */
+.battery-meter {
+	margin: 0 0 0 auto;
+	height: 18px;
+	width: 29px;
+	> div {
+		display: inline-block;
+	}
+}
+.battery-meter-inner {
+	box-shadow: 0 0 0 1px rgba(255,255,255,0.5) inset;
+	border-radius: 3px;
+	margin-right: 1px;
+	position: relative;
+	height: 12px;
+	width: 25px;
+	&:before, &:after {
+		content: "";
+		display: block;
+	}
+	&:before {
+		background-color: #fff;
+		border-radius: 1px 0 0 1px;
+		margin: 2px;
+		height: 8px;
+		width: 19px;
+	}
+	&:after {
+		background-color: rgba(255,255,255,0.5);
+		border-radius: 0 3px 3px 0;
+		position: absolute;
+		top: 0;
+		left: 100%;
+		margin: 4px 0 0 1px;
+		height: 4px;
+		width: 2px;
+	}
+}
+/** Pages **/
+.pages, .bottom-bar {
+	transition: transform 0.25s ease-in-out;
+}
+.pages {
+	white-space: nowrap;
+	width: 100%;
+	height: calc(100% - #{$paginationH + $bottomBarH});
+	transform-style: preserve-3d;
+	z-index: 2;
+}
+.page {
+	display: inline-flex;
+	align-content: flex-start;
+	flex-wrap: wrap;
+	padding: ($statusBarH + 7px) 8px 7px 8px;
+	width: $screenW;
+	height: 100%;
+	$z: 1px;
+	@for $fy from 1 through 5 {
+		$y: 106px - (87 * ($fy - 1));
+		@for $fx from 1 through 4 {
+			$x : -8px - (76 * ($fx - 1));
+			.folder:nth-child(#{$fx + (4 * ($fy - 1))}) .folder-apps:focus {
+				transform: scale(1,1) translate3d($x,$y,$z);
+				~ .folder-name {
+					transform: translate3d($x,$y - 376,$z);
+				}
+			}
+		}
+	}
+}
+/** Apps **/
+.app, .folder {
+	margin: 0 8px 7px 8px;
+	max-width: 60px;
+	max-height: 80px;
+}
+.app-icon, .folder-apps {
+	margin: auto;
+}
+.app-icon {
+	background-image: linear-gradient(#dde,#aab);
+	border-radius: 9px;
+	width: 60px;
+	height: 60px;
+}
+@for $c from 1 through length($iconColors) {
+	.app:nth-child(6n + #{$c + 1}) .app-icon {
+		background-image: linear-gradient(nth(nth($iconColors,$c),1),nth(nth($iconColors,$c),2));
+	}
+}
+.bg-blur {
+	backdrop-filter: blur(0px);
+	-webkit-backdrop-filter: blur(0px);
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: $screenH;
+	visibility: hidden;
+	transition: backdrop-filter 0.25s $folderTiming, visibility 0.25s $folderTiming;
+	z-index: 1;
+}
+.folder-apps {
+	background-color: rgba(255,255,255,0.3);
+	border-radius: 45px;
+	backdrop-filter: blur(15px);
+	-webkit-backdrop-filter: blur(15px);
+	display: flex;
+	align-content: flex-start;
+	flex-wrap: wrap;
+	transition: transform 0.25s $folderTiming;
+	padding: 44px 36px;
+	width: 304px;
+	height: 304px;
+	$scale: 60/304;
+	transform: scale($scale,$scale) {
+		origin: 0 0;
+	};
+	&:focus {
+		backdrop-filter: blur(0px);
+		-webkit-backdrop-filter: blur(0px);
+		outline: 0;
+		padding: 26px 8px 26px 8px;
+		~ .folder-name {
+			animation: folderNameFadeIn 0.2s 0.2s forwards;
+			font-size: 3em;
+			opacity: 0;
+			width: 300px;
+		}
+		~ .bg-blur {
+			backdrop-filter: $blur;
+			-webkit-backdrop-filter: $blur;
+			visibility: visible;
+		}
+		.app {
+			margin: 0 18px 7px 18px;
+		}
+		.app-icon {
+			border-radius: 9px;
+		}
+		.app-name {
+			display: inherit;
+		}
+	}
+	.app {
+		margin: 0 8px 16px 8px;
+	}
+	.app-icon {
+		border-radius: 18px;
+	}
+	.app-name {
+		display: none;
+	}
+}
+.app-icon, .folder-apps:not(:focus) {
+	&:active {
+		filter: brightness(0.7);
+	}
+}
+.app-name, .folder-name {
+	text-align: center;
+}
+.folder-name {
+	transform: translateY(-244px);
+}
+
+/** Pagination **/
+.pagination {
+	display: flex;
+	justify-content: center;
+	top: calc(100% - #{$bottomBarH + $paginationH});
+	width: 100%;
+	height: $paginationH;
+}
+/** Bottom Bar **/
+.bottom-bar {
+	background-color: rgba(255,255,255,0.3);
+	backdrop-filter: $blur;
+	-webkit-backdrop-filter: $blur;
+	top: calc(100% + #{$paginationH});
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 0 6px;
+	width: 100%;
+	height: $bottomBarH;
+	transform-style: preserve-3d;
+	.app, .folder {
+		margin: 11px 8px;
+		max-height: 60px;
+	}
+	.folder .app {
+		margin: 0 8px 16px 8px;
+	}
+	.bg-blur {
+		top: -$screenH + $bottomBarH;
+	}
+	.folder-name {
+		display: none;
+	}
+	.folder-apps:focus .app {
+		margin: 0 18px 27px 18px;
+	}
+	$y: -359px;
+	$z: 1px;
+	@for $bfx from 1 through 4 {
+		$x: -8px - (76 * ($bfx - 1));
+		.folder:nth-child(#{$bfx}) .folder-apps:focus {
+			transform: scale(1,1) translate3d($x,$y,$z);
+			~ .folder-name {
+				display: inherit;
+				transform: translate3d($x,$y - 376,$z);
+			}
+		}
+	}
+}
+@keyframes folderNameFadeIn {
+	from {opacity: 0;}
+	to {opacity: 1;}
+}

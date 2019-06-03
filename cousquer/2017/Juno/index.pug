@@ -1,0 +1,63 @@
+- var pages = 2;
+- function rand(min,max)
+	- return Math.floor(Math.random() * ((max + 1) - min)) + min;
+
+.screen
+	- for (var p = 0; p < pages; ++p) {
+		- if (p == 0) {
+			input(type="radio",id="_p"+p,name="pg",checked)
+		- }
+		- else {
+			input(type="radio",id="_p"+p,name="pg")
+		- }
+	- }
+	.status
+		.carrier="No Service"
+		.clock="12:00 AM"
+		.battery
+			.battery-meter
+				.battery-meter-inner
+	.pages
+		- for (var p = 0; p < pages; ++p) {
+			.page
+				- for (var a = 0; a < rand(4,10); ++a) {
+					.app
+						.app-icon
+						.app-name="App"
+				- }
+				- for (var f = 0; f < rand(4,10); ++f) {
+					.folder
+						.folder-apps(tabindex="0")
+							- for (var fa = 0; fa < rand(2,9); ++fa) {
+								.app
+									.app-icon
+									.app-name="App"
+							- }
+						.bg-blur
+						.folder-name="Folder"
+				- }
+		- }
+		.bottom-bar
+			- var bFolders = rand(1,2);
+			- for (var f = 0; f < bFolders; ++f) {
+				.folder
+					.folder-apps(tabindex="0")
+						- for (var fa = 0; fa < rand(2,9); ++fa) {
+							.app
+								.app-icon
+								.app-name="App"
+						- }
+					.bg-blur
+					.folder-name="Folder"
+			- }
+			- for (var a = 0; a < 4 - bFolders; ++a) {
+				.app
+					.app-icon
+			- }
+	.pagination
+		- for (var p = 0; p < pages; ++p) {
+			label(for="_p"+p)
+				span
+		- }
+	
+		
